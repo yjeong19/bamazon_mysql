@@ -1,0 +1,23 @@
+{
+  "name": "bamazon_mysql",
+  "version": "1.0.0",
+  "description": "my sql practice",
+  "main": "bamazonCustomer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yjeong19/bamazon_mysql.git"
+  },
+  "author": "Young",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yjeong19/bamazon_mysql/issues"
+  },
+  "homepage": "https://github.com/yjeong19/bamazon_mysql#readme",
+  "dependencies": {
+    "inquirer": "^4.0.1",
+    "mysql": "^2.15.0"
+  }
+}
