@@ -23,7 +23,7 @@ function display(){
     if(err) throw err;
 
     for(var i=0; i < res.length; i++){
-    console.log('id: ' + res[i].item_id + '||' + 'product: ' + res[i].product_name + '||' + 'price: ' + res[i].price);
+    console.log('id: ' + res[i].item_id + '|| product: ' + res[i].product_name + '|| price: ' + res[i].price + '|| quantity: ' + res[i].quantity);
   }
   purchaseOrder();
   })
@@ -44,23 +44,27 @@ function purchaseOrder(){
 ]).then(response=> {
   var id = parseInt(response.id);
   var quantity = parseInt(response.quantity);
-  console.log(response.id + ' ' + response.quantity)
+  // console.log(response.id + ' ' + response.quantity)
 
   connection.query('SELECT *FROM products WHERE item_id = ?',[id], function(err, res){
     if (err) throw err;
-    console.log(res);
-    console.log(res[0].quantity)
+    var productQuantity = parseInt(res[0].quantity)
+    var price = parseInt(res[0].price)
 
-    if(quantity < res[0].quantity){
-      console.log('this guy fucks')
+    if(quantity < productQuantity){
+
+      var query = 'UPDATE products SET quantity = ? WHERE item_id =?';
+      connection.query(query, [productQuantity - quantity, id], function(err,res){
+        if (err) throw err;
+        console.log("it'll cost $"+ (quantity*price));
+        connection.end();
+      })
     }
-
-
-
-  })
-
-
-})
-// connection.end();
-
+    else{
+      console.log('Insufficient quantity, there is only ' + productQuantity + ' left!')
+      connection.end();
+      
+    }
+  });
+});
 }
